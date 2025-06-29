@@ -1,20 +1,24 @@
-import os 
+import os
 from dotenv import load_dotenv
-from discord import Intents, Client, Message
-#from responses import get_response
+from discord.ext import commands
+from discord import Intents
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-class MyClient(Client):
+class RustBot(commands.Bot):
+    def __init__(self):
+        intents = Intents.default()
+        intents.message_content = True
+        super().__init__(command_prefix='!', intents=intents)
+    
     async def on_ready(self):
-        print(f'Logged on as {self.user}!')
+        print(f'Rust bot online as {self.user}!')
 
-    async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
+bot = RustBot()
 
-intents = Intents.default()
-intents.message_content = True
+@bot.command()
+async def serverstatus(ctx, *, server_ip):
+    await ctx.send(f"Checking {server_ip}...")
 
-client = MyClient(intents=intents)
-client.run(TOKEN)
+bot.run(TOKEN)
