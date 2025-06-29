@@ -1,0 +1,10 @@
+# Ignore Python venv
+.venv/
+rusty-env/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore environment variables
+.env
